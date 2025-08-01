@@ -1,0 +1,20 @@
+<html>
+    <head>
+   <title>SIN_TITULO</title>
+    </head>
+    <body>
+        <input id="npeso" placeholder="peso" type="number" onchange="calcular_imc()">
+        <input id="naltura" placeholder="altura" type="number" onchange="calcular_imc()">
+        <button onclick="calcular_imc()">calcular</button>
+        <h2 id="resultado"></h2>
+        <script type="text/javascript">
+            function calcular_imc() {
+            var altura, imc, peso;
+            peso = npeso.value;
+            altura = naltura.value;
+            imc = peso/(altura*altura);
+            resultado.innerText = imc;
+        }
+        </script>
+    </body>
+</html>        
