@@ -1,20 +1,91 @@
+<!DOCTYPE html>
 <html>
-    <head>
-   <title>SIN_TITULO</title>
-    </head>
-    <body>
-        <input id="npeso" placeholder="peso" type="number" onchange="calcular_imc()">
-        <input id="naltura" placeholder="altura" type="number" onchange="calcular_imc()">
-        <button onclick="calcular_imc()">calcular</button>
-        <h2 id="resultado"></h2>
-        <script type="text/javascript">
-            function calcular_imc() {
-            var altura, imc, peso;
-            peso = npeso.value;
-            altura = naltura.value;
-            imc = peso/(altura*altura);
-            resultado.innerText = imc;
+<head>
+    <title>pesosyalturas</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: (); 
+
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, Helvetica, sans-serif;
         }
-        </script>
-    </body>
-</html>        
+
+        #caja {
+            background-color: rgba(231, 171, 219, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        input {
+            margin: 10px;
+            padding: 10px;
+            width: 150px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="caja">
+        <input id="npeso" placeholder="Peso (kg)" type="number" onchange="calcular_imc()">
+        <input id="naltura" placeholder="Altura (m)" type="number" onchange="calcular_imc()">
+        <br>
+        <button onclick="calcular_imc()">Calcular</button>
+        <h2 id="resultado"></h2>
+        <img src="" id="imagen">
+    </div>
+    
+    <script type="text/javascript">
+        function calcular_imc() {
+            var peso = parseFloat(document.getElementById('npeso').value);
+            var altura = parseFloat(document.getElementById('naltura').value);
+
+            if (!peso || !altura || altura <= 0) {
+                document.getElementById('resultado').innerText = "Por favor, introduce valores válidos.";
+                return;
+            }
+
+            var imc = peso / (altura * altura);
+            document.getElementById('resultado').innerText = "Tu IMC es: " + imc.toFixed(2);
+        
+            var mensaje = "Tu IMC es: " + imc.toFixed(2);
+            var fondo = "";
+
+            if (imc < 18.5) {
+                mensaje += " (Bajo peso)";
+                fondo = "./img/bajo_peso.png";
+            } else if (imc < 25) {
+                mensaje += " (Peso normal)";
+                fondo = "./img/peso_normal.png";
+            } else if (imc < 30) {
+                mensaje += " (Sobrepeso)";
+                fondo = "./img/sobrepeso.png";
+            } else {
+                mensaje += " (Obesidad)";
+                fondo = "./img/obesidad.png";
+            }
+            console.log(fondo);
+            
+            resultado.innerText = mensaje; 
+            imagen.src = fondo;
+
+            // Cambiar fondo dinámicamente
+            document.body.style.backgroundImage = `url('${fondo}')`;
+        }
+    </script>
+</body>
+</html>
